@@ -1,8 +1,11 @@
 package com.example.project3;
 
+import android.app.Activity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,12 +23,20 @@ public class RecyclerAdapter extends RecyclerView.Adapter {
     // list of items
     private List<RecyclerItem> recyclerItemList = new ArrayList<>();
 
+    // user info
+    String currUserId;
+    String destUserId;
+
     /**
      * Constructor
      * @param itemsList list of items in recyclerview
+     * @param currUserId
+     * @param destUserId
      */
-    public RecyclerAdapter(List<RecyclerItem> itemsList) {
+    public RecyclerAdapter(List<RecyclerItem> itemsList, String currUserId, String destUserId) {
         recyclerItemList = itemsList;
+        this.currUserId = currUserId;
+        this.destUserId = destUserId;
     }
 
     @Override
@@ -63,6 +74,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        // safety check, make sure there is a recycler item at position
         RecyclerItem recyclerItem = recyclerItemList.get(position);
         if (recyclerItem == null) {
             return;
@@ -72,11 +84,15 @@ public class RecyclerAdapter extends RecyclerView.Adapter {
         String detailsText = recyclerItem.getChatDetailsStr();
         switch (recyclerItem.getViewType()) {
             case RecyclerItem.LEFT_CHAT_BUBBLE_LAYOUT_VIEW_TYPE:
+                LeftChatViewHolder lcViewHolder = (LeftChatViewHolder)holder;
                 String senderText = recyclerItem.getContactUsername();
-                ((LeftChatViewHolder)holder).setTexts(chatBubbleText, detailsText, senderText);
+                lcViewHolder.setTexts(chatBubbleText, detailsText, senderText);
                 break;
             case RecyclerItem.RIGHT_CHAT_BUBBLE_LAYOUT_VIEW_TYPE:
-                ((RightChatViewHolder)holder).setTexts(chatBubbleText, detailsText);
+                RightChatViewHolder rcViewHolder = (RightChatViewHolder)holder;
+                rcViewHolder.setTexts(chatBubbleText, detailsText);
+                // only able to delete own messages
+                rcViewHolder.setTrashIconHandler(recyclerItem.getMsgId());
                 break;
             default:
                 return;
@@ -127,6 +143,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter {
      */
     public class RightChatViewHolder extends RecyclerView.ViewHolder {
 
+        View view;
         private CardView chatBubbleCardView;
         private TextView chatBubbleTextView;
         private TextView detailsTextView;
@@ -137,6 +154,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter {
          */
         public RightChatViewHolder(@NonNull View itemView) {
             super(itemView);
+            view = itemView;
             chatBubbleTextView = itemView.findViewById(R.id.right_recycler_textview);
             chatBubbleCardView = itemView.findViewById(R.id.right_recycler_cardview);
             detailsTextView = itemView.findViewById(R.id.right_details_textview);
@@ -150,6 +168,23 @@ public class RecyclerAdapter extends RecyclerView.Adapter {
         public void setTexts(String chatText, String detailsText) {
             chatBubbleTextView.setText(chatText);
             detailsTextView.setText(detailsText);
+        }
+
+        /**
+         * Delete a message that corresponds to the clicked trash icon
+         * @param messageId id of message to delete
+         */
+        public void setTrashIconHandler(int messageId) {
+            //Log.d("RecAdapter", "Set trash icon handler for message " + messageId);
+            int msgId = messageId;
+            ImageView trashIcon = itemView.findViewById(R.id.right_trash_icon);
+            trashIcon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // when trash icon is clicked, delete the message
+                    new DeleteMessageTask((Activity) view.getContext()).execute(currUserId, destUserId, String.valueOf(msgId));
+                }
+            });
         }
     }
 }

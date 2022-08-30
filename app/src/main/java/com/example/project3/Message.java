@@ -12,6 +12,7 @@ public class Message implements Serializable {
     // the format of timestamps
     public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
+    int msgId;
     int srcUserId;
     int destUserId;
     String senderUsername;
@@ -24,6 +25,14 @@ public class Message implements Serializable {
         this.senderUsername = senderUsername;
         this.msg = msg;
         this.timestamp = timestamp;
+    }
+
+    public int getMsgId() {
+        return msgId;
+    }
+
+    public void setMsgId(int msgId) {
+        this.msgId = msgId;
     }
 
     public int getSrcUserId() {

@@ -17,6 +17,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="left semder"
+            android:textColor="@color/purple_200"
+            android:textStyle="bold"
             android:layout_marginLeft="5dp"/>
     </LinearLayout>
 
@@ -40,7 +42,11 @@
                 android:text="this is a test message"
                 android:textSize="20dp"
                 android:textColor="@color/black"
-                android:padding="10dp"/>
+                android:padding="10dp"
+                android:enabled="true"
+                android:textIsSelectable="true"
+                android:focusable="true"
+                android:longClickable="true"/>
         </androidx.cardview.widget.CardView>
 
         <View

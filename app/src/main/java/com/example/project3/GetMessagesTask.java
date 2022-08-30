@@ -25,6 +25,9 @@ public final class GetMessagesTask extends AsyncTask<String, Integer, ArrayList<
     String srcUserId = "";
     String destUserId = "";
 
+    // Id of message that was deleted (only used by DeleteMessageTask)
+    String deletedMsgId = "";
+
     public GetMessagesTask(Activity activity) {
         this.srcActivity = activity;
     }
@@ -33,6 +36,9 @@ public final class GetMessagesTask extends AsyncTask<String, Integer, ArrayList<
     protected ArrayList<Message> doInBackground(String... strings) {
         srcUserId = strings[0];
         destUserId = strings[1];
+        if (strings.length > 2) {
+            deletedMsgId = strings[2];
+        }
         String apiResults = "";
         try {
             Log.d("getMessages", "Got list of messages between users " + srcUserId + " and " + destUserId);
@@ -70,11 +76,22 @@ public final class GetMessagesTask extends AsyncTask<String, Integer, ArrayList<
     @Override
     protected void onPostExecute(ArrayList<Message> messages) {
         Log.d("getMessages", "enter postExecute");
-        Intent intent = new Intent(srcActivity, MessagesActivity.class);
-        intent.putExtra(MainActivity.CURR_USER_ID_KEY, srcUserId);
-        intent.putExtra(MessagesActivity.DEST_USER_ID_KEY, destUserId);
-        intent.putExtra(MessagesActivity.DEST_USERNAME_KEY, messages.get(0).getSenderUsername());
-        intent.putExtra(MessagesActivity.MESSAGES_KEY, messages);
-        srcActivity.startActivity(intent);
+        // determine if src activity was messages activity
+        boolean isFromMsgsActivity = srcActivity.getClass().getName().equals(MessagesActivity.class.getName());
+        if (isFromMsgsActivity && !deletedMsgId.isEmpty()) {
+            MessagesActivity msgActivity = (MessagesActivity) srcActivity;
+            msgActivity.removeMessageFromList(Integer.valueOf(deletedMsgId));
+        } else if (isFromMsgsActivity) {
+            MessagesActivity msgActivity = (MessagesActivity) srcActivity;
+            msgActivity.setMessagesList(messages);
+        } else {
+                // if message activy not yet created, start the Message activity
+                Intent intent = new Intent(srcActivity, MessagesActivity.class);
+                intent.putExtra(MainActivity.CURR_USER_ID_KEY, srcUserId);
+                intent.putExtra(MessagesActivity.DEST_USER_ID_KEY, destUserId);
+                intent.putExtra(MessagesActivity.DEST_USERNAME_KEY, messages.get(0).getSenderUsername());
+                intent.putExtra(MessagesActivity.MESSAGES_KEY, messages);
+                srcActivity.startActivity(intent);
+        }
     }
 }

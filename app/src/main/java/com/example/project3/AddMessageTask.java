@@ -19,7 +19,7 @@ import java.sql.Timestamp;
 public final class AddMessageTask extends AsyncTask<String, Integer, Boolean> {
 
     // the activity that created the task
-    MessagesActivity msgActivity;
+    private MessagesActivity msgActivity;
 
     private static final String ADD_MSG_ENDPOINT = "http://10.0.3.2/edproj3/api/addmessage";
 
@@ -73,7 +73,7 @@ public final class AddMessageTask extends AsyncTask<String, Integer, Boolean> {
     @Override
     protected void onPostExecute(Boolean success) {
         Log.d("addMessage", "enter postExecute");
-        msgActivity.findViewById(R.id.messages_recycler_view);
+        // create message from user input data and add to recycler view in MessageActivity
         Message m = new Message(Integer.parseInt(srcuserid), Integer.parseInt(destuserid), destUsername, msg, currTime);
         msgActivity.addMessageToList(m);
     }

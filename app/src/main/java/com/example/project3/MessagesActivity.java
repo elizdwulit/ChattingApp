@@ -1,11 +1,15 @@
 package com.example.project3;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.format.Time;
+import android.view.ContextMenu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
@@ -14,6 +18,8 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 public class MessagesActivity extends AppCompatActivity {
 
@@ -54,6 +60,15 @@ public class MessagesActivity extends AppCompatActivity {
 
         // get required ui elements
         msgEditText = findViewById(R.id.message_edit_text);
+
+        // create executor to update the messages list every 3 seconds
+        ScheduledThreadPoolExecutor executor =  new ScheduledThreadPoolExecutor(1);
+        executor.scheduleWithFixedDelay(new Runnable() {
+            @Override
+            public void run() {
+                new GetMessagesTask(MessagesActivity.this).execute(currUserId, destUserId);
+            }
+        }, 0L, 3, TimeUnit.SECONDS);
     }
 
     /**
@@ -65,23 +80,23 @@ public class MessagesActivity extends AppCompatActivity {
         // create the layout manager for RecyclerView
         LinearLayoutManager layoutManager = new LinearLayoutManager(MessagesActivity.this);
         recyclerView.setLayoutManager(layoutManager);
+        registerForContextMenu(recyclerView);
 
         // add the items to the adapter
         for (Message message : messages) {
             addItem(message);
         }
 
-        recyclerAdapter = new RecyclerAdapter(items);
+        recyclerAdapter = new RecyclerAdapter(items, currUserId, destUserId);
         recyclerView.setAdapter(recyclerAdapter);
     }
-
     /**
      * Add a RecyclerItem to the items list
      * @param message Message to create RecyclerItem from
      */
     public void addItem(Message message) {
         int chatBubbleType = getChatBubbleType(message);
-        RecyclerItem item = new RecyclerItem(chatBubbleType, message.getMsg(), message.getFormattedTimestamp(), message.getSenderUsername());
+        RecyclerItem item = new RecyclerItem(chatBubbleType, message.getMsgId(), message.getMsg(), message.getFormattedTimestamp(), message.getSenderUsername());
         items.add(item);
     }
 
@@ -100,8 +115,13 @@ public class MessagesActivity extends AppCompatActivity {
         return chatBubbleType;
     }
 
+    /**
+     * Send a message
+     * @param v view
+     */
     public void sendMessage(View v) {
         String message = msgEditText.getText().toString();
+        msgEditText.setText(""); // clear the edittext
         new AddMessageTask(this).execute(currUserId, destUserId, destUsername, message);
     }
 
@@ -113,6 +133,31 @@ public class MessagesActivity extends AppCompatActivity {
         messages.add(message);
         addItem(message);
         recyclerAdapter.notifyDataSetChanged();
-        recyclerView.scrollToPosition(items.size() - 1);
+        recyclerView.scrollToPosition(items.size() - 1); // scroll to bottom
+    }
+
+    /**
+     * Set the messages list
+     * @param msgs
+     */
+    public void setMessagesList(ArrayList<Message> msgs) {
+        messages.clear();
+        messages.addAll(msgs);
+        items.clear();
+        for (Message message : messages) {
+            addItem(message);
+        }
+        recyclerAdapter.notifyDataSetChanged();
+        recyclerView.scrollToPosition(items.size() - 1); // scroll to bottom
+    }
+
+    /**
+     * Remove a message from the list and notify the recycler view
+     * @param messageId id of message to remove
+     */
+    public void removeMessageFromList(int messageId) {
+        messages.removeIf(message -> message.getMsgId() == messageId);
+        items.removeIf(recyclerItem -> recyclerItem.getMsgId() == messageId);
+        recyclerAdapter.notifyDataSetChanged();
     }
 }

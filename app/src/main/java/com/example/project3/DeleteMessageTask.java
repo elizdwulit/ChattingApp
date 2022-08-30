@@ -20,14 +20,26 @@ public final class DeleteMessageTask extends AsyncTask<String, Integer, Boolean>
 
     private static final String DELETE_MSG_ENDPOINT = "http://10.0.3.2/edproj3/api/deletemessage";
 
+    Activity msgActivity;
+
+    String currUserId;
+    String destUserId;
+    String delMsgId;
+
+    public DeleteMessageTask(Activity activity) {
+        this.msgActivity = activity;
+    }
+
     @Override
     protected Boolean doInBackground(String... strings) {
         boolean deleteSuccessful = false;
-        String msgId = strings[0];
-        Log.d("deleteMsg", "Deleting message. msgId: " + msgId);
+        currUserId = strings[0];
+        destUserId = strings[1];
+        delMsgId = strings[2];
+        Log.d("deleteMsg", "Deleting message. msgId: " + delMsgId);
         try {
             URL url = new URL(DELETE_MSG_ENDPOINT
-                    + "?msgid=" + URLEncoder.encode(msgId, "UTF-8"));
+                    + "?msgid=" + URLEncoder.encode(delMsgId, "UTF-8"));
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("DELETE");
             conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
@@ -52,5 +64,7 @@ public final class DeleteMessageTask extends AsyncTask<String, Integer, Boolean>
     @Override
     protected void onPostExecute(Boolean success) {
         Log.d("deleteMsg", "enter postExecute");
+        // refresh the messages list
+        new GetMessagesTask(msgActivity).execute(currUserId, destUserId, delMsgId);
     }
 }

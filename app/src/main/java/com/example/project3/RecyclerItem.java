@@ -16,27 +16,19 @@ public class RecyclerItem {
     // text above chat bubble showing the contact that is getting the src user's messages
     private String contactUsername = "";
 
-    /**
-     * Constructor
-     * @param viewType
-     * @param chatBubbleText
-     * @param detailsStr
-     */
-    public RecyclerItem(int viewType, String chatBubbleText, String detailsStr) {
-        this.viewType = viewType;
-        bubbleText = chatBubbleText;
-        chatDetailsStr = detailsStr;
-    }
+    // id of message
+    private int msgId;
 
     /**
      * Constructor
      * @param viewType
      * @param chatBubbleText
      * @param detailsStr
-     * @param sender
+     * @param contactUsername
      */
-    public RecyclerItem(int viewType, String chatBubbleText, String detailsStr, String contactUsername) {
+    public RecyclerItem(int viewType, int msgId, String chatBubbleText, String detailsStr, String contactUsername) {
         this.viewType = viewType;
+        this.msgId = msgId;
         bubbleText = chatBubbleText;
         chatDetailsStr = detailsStr;
         this.contactUsername = contactUsername;
@@ -48,6 +40,14 @@ public class RecyclerItem {
 
     public void setViewType(int viewType) {
         this.viewType = viewType;
+    }
+
+    public int getMsgId() {
+        return msgId;
+    }
+
+    public void setMsgId(int msgId) {
+        this.msgId = msgId;
     }
 
     public String getBubbleText() {

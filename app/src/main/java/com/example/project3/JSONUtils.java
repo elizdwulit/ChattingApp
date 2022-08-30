@@ -26,6 +26,8 @@ public class JSONUtils {
             for(int i=0; i < jsonArr.length(); i++)
             {
                 JSONObject obj = jsonArr.getJSONObject(i);
+                String msgIdStr = obj.getString("id");
+                int msgId = msgIdStr != null ? Integer.parseInt(msgIdStr) : -1;
                 String srcUserStr = obj.getString("src_user_id");
                 int srcUserId = srcUserStr != null ? Integer.parseInt(srcUserStr) : -1;
                 String destUserStr = obj.getString("dest_user_id");
@@ -40,7 +42,7 @@ public class JSONUtils {
 
                 // create message obj
                 Message message = new Message(srcUserId, destUserId, senderUsername, msgStr, timestamp);
-
+                message.setMsgId(msgId);
                 messages.add(message);
             }
         } catch (Exception e) {
