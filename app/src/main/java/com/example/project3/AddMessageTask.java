@@ -19,23 +19,28 @@ import java.sql.Timestamp;
 public final class AddMessageTask extends AsyncTask<String, Integer, Boolean> {
 
     // the activity that created the task
-    Activity srcActivity;
+    MessagesActivity msgActivity;
 
     private static final String ADD_MSG_ENDPOINT = "http://10.0.3.2/edproj3/api/addmessage";
 
-    public AddMessageTask(Activity activity) {
-        srcActivity = activity;
+    String srcuserid;
+    String destuserid;
+    String destUsername;
+    String msg;
+    Timestamp currTime;
+
+    public AddMessageTask(MessagesActivity msgActivity) {
+        this.msgActivity = msgActivity;
     }
 
     @Override
     protected Boolean doInBackground(String... strings) {
         Log.d("addMessage", "Attempting to add new message");
-
-        String srcuserid = strings[0];
-        String destuserid = strings[1];
-        String msg = strings[2];
-        Timestamp currTime = new Timestamp(System.currentTimeMillis());
-
+        srcuserid = strings[0];
+        destuserid = strings[1];
+        destUsername = strings[2];
+        msg = strings[3];
+        currTime = new Timestamp(System.currentTimeMillis());
         String apiResults = "";
         try {
             URL url = new URL(ADD_MSG_ENDPOINT);
@@ -56,19 +61,20 @@ public final class AddMessageTask extends AsyncTask<String, Integer, Boolean> {
 
             Reader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), StandardCharsets.ISO_8859_1));
 
-            return resCode == HttpURLConnection.HTTP_OK;
+            Log.d("addMessage", resCode == HttpURLConnection.HTTP_OK ? "Successfully added message" : "Failed to add message");
+
+            return true;
         } catch (Exception e) {
             Log.e("addMessage", "Exception adding message");
         }
-
-        Log.d("addMessage", "Add message completed");
-
         return false;
     }
 
     @Override
     protected void onPostExecute(Boolean success) {
         Log.d("addMessage", "enter postExecute");
-
+        msgActivity.findViewById(R.id.messages_recycler_view);
+        Message m = new Message(Integer.parseInt(srcuserid), Integer.parseInt(destuserid), destUsername, msg, currTime);
+        msgActivity.addMessageToList(m);
     }
 }

@@ -72,7 +72,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter {
         String detailsText = recyclerItem.getChatDetailsStr();
         switch (recyclerItem.getViewType()) {
             case RecyclerItem.LEFT_CHAT_BUBBLE_LAYOUT_VIEW_TYPE:
-                String senderText = recyclerItem.getSender();
+                String senderText = recyclerItem.getContactUsername();
                 ((LeftChatViewHolder)holder).setTexts(chatBubbleText, detailsText, senderText);
                 break;
             case RecyclerItem.RIGHT_CHAT_BUBBLE_LAYOUT_VIEW_TYPE:

@@ -96,10 +96,9 @@ public final class GetContactedUsersTask extends AsyncTask<String, Integer, Arra
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 User clickedUser = (User) parent.getItemAtPosition(position);
-                Log.d("contactedUserClick", "clicked userid: " + clickedUser.getId());
-                Intent intent = new Intent(srcActivity, MessagesActivity.class);
-                //intent.putExtra(MainActivity.CURR_USER_ID_KEY, userId);
-                srcActivity.startActivity(intent);
+                int clickedUserId = clickedUser.getId();
+                Log.d("contactedUserClick", "clicked userid: " + clickedUserId);
+                new GetMessagesTask(srcActivity).execute(String.valueOf(currUserId), String.valueOf(clickedUserId));
             }
         });
 
@@ -111,10 +110,9 @@ public final class GetContactedUsersTask extends AsyncTask<String, Integer, Arra
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 User clickedUser = (User) parent.getItemAtPosition(position);
-                Log.d("contactedUserClick", "clicked userid: " + clickedUser.getId());
-                Intent intent = new Intent(srcActivity, MessagesActivity.class);
-                //intent.putExtra(MainActivity.CURR_USER_ID_KEY, userId);
-                srcActivity.startActivity(intent);
+                int clickedUserId = clickedUser.getId();
+                Log.d("contactedUserClick", "clicked userid: " + clickedUserId);
+                new GetMessagesTask(srcActivity).execute(String.valueOf(currUserId), String.valueOf(clickedUserId));
             }
         });
 

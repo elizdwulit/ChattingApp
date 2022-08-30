@@ -1,7 +1,11 @@
 package com.example.project3;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
+
+import androidx.lifecycle.Lifecycle;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -17,10 +21,18 @@ public final class GetMessagesTask extends AsyncTask<String, Integer, ArrayList<
 
     private static final String GET_MESSAGES_ENDPOINT = "http://10.0.3.2/edproj3/api/getmessages";
 
+    Activity srcActivity;
+    String srcUserId = "";
+    String destUserId = "";
+
+    public GetMessagesTask(Activity activity) {
+        this.srcActivity = activity;
+    }
+
     @Override
     protected ArrayList<Message> doInBackground(String... strings) {
-        String srcUserId = strings[0];
-        String destUserId = strings[1];
+        srcUserId = strings[0];
+        destUserId = strings[1];
         String apiResults = "";
         try {
             Log.d("getMessages", "Got list of messages between users " + srcUserId + " and " + destUserId);
@@ -58,6 +70,11 @@ public final class GetMessagesTask extends AsyncTask<String, Integer, ArrayList<
     @Override
     protected void onPostExecute(ArrayList<Message> messages) {
         Log.d("getMessages", "enter postExecute");
-
+        Intent intent = new Intent(srcActivity, MessagesActivity.class);
+        intent.putExtra(MainActivity.CURR_USER_ID_KEY, srcUserId);
+        intent.putExtra(MessagesActivity.DEST_USER_ID_KEY, destUserId);
+        intent.putExtra(MessagesActivity.DEST_USERNAME_KEY, messages.get(0).getSenderUsername());
+        intent.putExtra(MessagesActivity.MESSAGES_KEY, messages);
+        srcActivity.startActivity(intent);
     }
 }
