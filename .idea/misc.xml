@@ -5,6 +5,10 @@
       <map>
         <entry key="..\:/Users/elizd/OneDrive/Documents/CIS 651 - Mobile/Project3/app/src/main/res/layout/activity_main.xml" value="0.290625" />
         <entry key="..\:/Users/elizd/OneDrive/Documents/CIS 651 - Mobile/Project3/app/src/main/res/layout/activity_message_dashboard.xml" value="0.146875" />
+        <entry key="..\:/Users/elizd/OneDrive/Documents/CIS 651 - Mobile/Project3/app/src/main/res/layout/activity_messages.xml" value="0.140625" />
+        <entry key="..\:/Users/elizd/OneDrive/Documents/CIS 651 - Mobile/Project3/app/src/main/res/layout/left_chat_bubble_layout.xml" value="0.14375" />
+        <entry key="..\:/Users/elizd/OneDrive/Documents/CIS 651 - Mobile/Project3/app/src/main/res/layout/recycler_veiw_design.xml" value="0.13958333333333334" />
+        <entry key="..\:/Users/elizd/OneDrive/Documents/CIS 651 - Mobile/Project3/app/src/main/res/layout/right_chat_bubble_layout.xml" value="0.22" />
       </map>
     </option>
   </component>

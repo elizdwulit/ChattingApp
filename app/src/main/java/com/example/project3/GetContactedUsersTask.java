@@ -1,6 +1,7 @@
 package com.example.project3;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
@@ -96,6 +97,9 @@ public final class GetContactedUsersTask extends AsyncTask<String, Integer, Arra
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 User clickedUser = (User) parent.getItemAtPosition(position);
                 Log.d("contactedUserClick", "clicked userid: " + clickedUser.getId());
+                Intent intent = new Intent(srcActivity, MessagesActivity.class);
+                //intent.putExtra(MainActivity.CURR_USER_ID_KEY, userId);
+                srcActivity.startActivity(intent);
             }
         });
 
@@ -108,6 +112,9 @@ public final class GetContactedUsersTask extends AsyncTask<String, Integer, Arra
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 User clickedUser = (User) parent.getItemAtPosition(position);
                 Log.d("contactedUserClick", "clicked userid: " + clickedUser.getId());
+                Intent intent = new Intent(srcActivity, MessagesActivity.class);
+                //intent.putExtra(MainActivity.CURR_USER_ID_KEY, userId);
+                srcActivity.startActivity(intent);
             }
         });
 

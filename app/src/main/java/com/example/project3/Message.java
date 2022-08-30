@@ -13,12 +13,14 @@ public class Message {
 
     int srcUserId;
     int destUserId;
+    String srcUsername;
     String msg;
     Timestamp timestamp;
 
-    public Message(int srcUserId, int destUserId, String msg, Timestamp timestamp) {
+    public Message(int srcUserId, int destUserId, String srcUsername, String msg, Timestamp timestamp) {
         this.srcUserId = srcUserId;
         this.destUserId = destUserId;
+        this.srcUsername = srcUsername;
         this.msg = msg;
         this.timestamp = timestamp;
     }
@@ -39,6 +41,14 @@ public class Message {
         this.destUserId = destUserId;
     }
 
+    public String getSrcUsername() {
+        return srcUsername;
+    }
+
+    public void setSrcUsername(String srcUsername) {
+        this.srcUsername = srcUsername;
+    }
+
     public String getMsg() {
         return msg;
     }
@@ -49,6 +59,10 @@ public class Message {
 
     public Timestamp getTimestamp() {
         return timestamp;
+    }
+
+    public String getFormattedTimestamp() {
+        return DATE_FORMAT.format(timestamp);
     }
 
     public void setTimestamp(Timestamp timestamp) {

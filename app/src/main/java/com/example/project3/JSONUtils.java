@@ -30,6 +30,7 @@ public class JSONUtils {
                 int srcUserId = srcUserStr != null ? Integer.parseInt(srcUserStr) : -1;
                 String destUserStr = obj.getString("dest_user_id");
                 int destUserId = destUserStr != null ? Integer.parseInt(destUserStr) : -1;
+                String srcUsername = obj.getString("src_user_username");
                 String msgStr = obj.getString("message");
 
                 // get the timestamp
@@ -38,7 +39,7 @@ public class JSONUtils {
                 Timestamp timestamp = new Timestamp(parsedDate.getTime());
 
                 // create message obj
-                Message message = new Message(srcUserId, destUserId, msgStr, timestamp);
+                Message message = new Message(srcUserId, destUserId, srcUsername, msgStr, timestamp);
 
                 messages.add(message);
             }
