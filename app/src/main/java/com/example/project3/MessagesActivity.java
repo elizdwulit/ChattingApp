@@ -66,7 +66,7 @@ public class MessagesActivity extends AppCompatActivity {
         executor.scheduleWithFixedDelay(new Runnable() {
             @Override
             public void run() {
-                new GetMessagesTask(MessagesActivity.this).execute(currUserId, destUserId);
+                new GetMessagesTask(MessagesActivity.this).execute(currUserId, destUserId, destUsername);
             }
         }, 0L, 3, TimeUnit.SECONDS);
     }

@@ -24,6 +24,7 @@ public final class GetMessagesTask extends AsyncTask<String, Integer, ArrayList<
     Activity srcActivity;
     String srcUserId = "";
     String destUserId = "";
+    String destUsername = "";
 
     // Id of message that was deleted (only used by DeleteMessageTask)
     String deletedMsgId = "";
@@ -36,8 +37,9 @@ public final class GetMessagesTask extends AsyncTask<String, Integer, ArrayList<
     protected ArrayList<Message> doInBackground(String... strings) {
         srcUserId = strings[0];
         destUserId = strings[1];
-        if (strings.length > 2) {
-            deletedMsgId = strings[2];
+        destUsername = strings[2];
+        if (strings.length > 3) {
+            deletedMsgId = strings[3];
         }
         String apiResults = "";
         try {
@@ -89,7 +91,7 @@ public final class GetMessagesTask extends AsyncTask<String, Integer, ArrayList<
                 Intent intent = new Intent(srcActivity, MessagesActivity.class);
                 intent.putExtra(MainActivity.CURR_USER_ID_KEY, srcUserId);
                 intent.putExtra(MessagesActivity.DEST_USER_ID_KEY, destUserId);
-                intent.putExtra(MessagesActivity.DEST_USERNAME_KEY, messages.get(0).getSenderUsername());
+                intent.putExtra(MessagesActivity.DEST_USERNAME_KEY, destUsername);
                 intent.putExtra(MessagesActivity.MESSAGES_KEY, messages);
                 srcActivity.startActivity(intent);
         }

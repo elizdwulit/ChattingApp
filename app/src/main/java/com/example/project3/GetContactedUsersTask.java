@@ -70,7 +70,7 @@ public final class GetContactedUsersTask extends AsyncTask<String, Integer, Arra
             Log.e("getContactedUsers", "Error getting list of contacted users");
         }
 
-        ArrayList<Integer> resultsArr = JSONUtils.getDestUserIdsFromApiResults(apiResults);
+        ArrayList<Integer> resultsArr = JSONUtils.getContactUserIdsFromApiResults(srcUserId, apiResults);
         Log.d("getContactedUsers", "Finished getting contacted users");
         return resultsArr;
     }
@@ -98,7 +98,7 @@ public final class GetContactedUsersTask extends AsyncTask<String, Integer, Arra
                 User clickedUser = (User) parent.getItemAtPosition(position);
                 int clickedUserId = clickedUser.getId();
                 Log.d("contactedUserClick", "clicked userid: " + clickedUserId);
-                new GetMessagesTask(srcActivity).execute(String.valueOf(currUserId), String.valueOf(clickedUserId));
+                new GetMessagesTask(srcActivity).execute(String.valueOf(currUserId), String.valueOf(clickedUserId), clickedUser.getUsername());
             }
         });
 
@@ -112,10 +112,8 @@ public final class GetContactedUsersTask extends AsyncTask<String, Integer, Arra
                 User clickedUser = (User) parent.getItemAtPosition(position);
                 int clickedUserId = clickedUser.getId();
                 Log.d("contactedUserClick", "clicked userid: " + clickedUserId);
-                new GetMessagesTask(srcActivity).execute(String.valueOf(currUserId), String.valueOf(clickedUserId));
+                new GetMessagesTask(srcActivity).execute(String.valueOf(currUserId), String.valueOf(clickedUserId), clickedUser.getUsername());
             }
         });
-
-
     }
 }

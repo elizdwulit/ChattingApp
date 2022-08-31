@@ -65,6 +65,6 @@ public final class DeleteMessageTask extends AsyncTask<String, Integer, Boolean>
     protected void onPostExecute(Boolean success) {
         Log.d("deleteMsg", "enter postExecute");
         // refresh the messages list
-        new GetMessagesTask(msgActivity).execute(currUserId, destUserId, delMsgId);
+        new GetMessagesTask(msgActivity).execute(currUserId, destUserId, "", delMsgId);
     }
 }

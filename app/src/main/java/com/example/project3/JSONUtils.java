@@ -76,21 +76,28 @@ public class JSONUtils {
 
     /**
      * Convert api results string to list of user ids corresponding to
-     * users that the src user has contacted
+     * users that the src user has contacted or has been contacted by
+     * @param srcUserParam
      * @param apiResults
      * @return list of user ids
      */
-    public static ArrayList<Integer> getDestUserIdsFromApiResults(String apiResults) {
+    public static ArrayList<Integer> getContactUserIdsFromApiResults(String srcUserParam, String apiResults) {
         ArrayList<Integer> contactedUsers = new ArrayList<>();
         try {
             JSONArray jsonArr = new JSONArray(apiResults);
             for(int i=0; i < jsonArr.length(); i++)
             {
                 JSONObject obj = jsonArr.getJSONObject(i);
+                String srcUserIdStr = obj.getString("src_user_id");
                 String destUserIdStr = obj.getString("dest_user_id");
+                int srcUserId = srcUserIdStr != null ? Integer.parseInt(srcUserIdStr) : -1;
                 int destUserId = destUserIdStr != null ? Integer.parseInt(destUserIdStr) : -1;
 
-                if (destUserId != -1) {
+                // add the user id's if it doesn't match the current user id
+                if (srcUserId != -1 && !srcUserIdStr.equals(srcUserParam)) {
+                    contactedUsers.add(srcUserId);
+                }
+                if (destUserId != -1 && !destUserIdStr.equals(srcUserParam)) {
                     contactedUsers.add(destUserId);
                 }
             }
