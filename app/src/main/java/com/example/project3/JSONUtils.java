@@ -65,6 +65,8 @@ public class JSONUtils {
                 JSONObject obj = jsonArr.getJSONObject(i);
                 int id = Integer.parseInt(obj.getString("id"));
                 String username = obj.getString("username");
+
+                // create a User with received information and add to arr
                 User user = new User(id, username);
                 resultsArr.add(user);
             }

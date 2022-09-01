@@ -17,10 +17,11 @@ public class MessageDashboardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message_dashboard);
 
+        // get the currently logged in user's id
         Intent intent = getIntent();
         String userId = intent.getStringExtra(MainActivity.CURR_USER_ID_KEY);
 
-        // create executor to update the messages list every 3 seconds
+        // create executor to update the messages list every 2 seconds
         ScheduledThreadPoolExecutor executor =  new ScheduledThreadPoolExecutor(1);
         executor.scheduleWithFixedDelay(new Runnable() {
             @Override
@@ -30,7 +31,13 @@ public class MessageDashboardActivity extends AppCompatActivity {
         }, 0L, 2, TimeUnit.SECONDS);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
 
+        // set the title to be contacted user
+        this.setTitle("Select a User to Message");
+    }
 
     @Override
     public void onBackPressed() {

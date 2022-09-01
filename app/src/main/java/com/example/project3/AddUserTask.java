@@ -23,12 +23,16 @@ public final class AddUserTask extends AsyncTask<String, Integer, Boolean> {
 
     // username
     String username = "";
-
     // password
     String pw = "";
 
+    // endpoint used to add a user to the db
     private static final String ADD_USER_ENDPOINT = "http://10.0.3.2/edproj3/api/adduser";
 
+    /**
+     * Constructor
+     * @param activity main activity reference
+     */
     public AddUserTask(Activity activity) {
         this.srcActivity = activity;
     }

@@ -23,6 +23,7 @@ import java.util.concurrent.TimeUnit;
 
 public class MessagesActivity extends AppCompatActivity {
 
+    // keys used to send data between Activities
     public static final String DEST_USER_ID_KEY = "DEST_USER_ID";
     public static final String DEST_USERNAME_KEY = "SENDER_USERNAME";
     public static final String MESSAGES_KEY = "MESSAGES";
@@ -54,6 +55,9 @@ public class MessagesActivity extends AppCompatActivity {
         currUserId = srcIntent.getStringExtra(MainActivity.CURR_USER_ID_KEY);
         destUserId = srcIntent.getStringExtra(DEST_USER_ID_KEY);
         destUsername = srcIntent.getStringExtra(DEST_USERNAME_KEY);
+
+        // set the title to be contacted user
+        this.setTitle(destUsername);
 
         // set up the recycler view
         setupRecyclerView();
@@ -96,6 +100,7 @@ public class MessagesActivity extends AppCompatActivity {
      */
     public void addItem(Message message) {
         int chatBubbleType = getChatBubbleType(message);
+        // create a recycler item from the message data and add to items list
         RecyclerItem item = new RecyclerItem(chatBubbleType, message.getMsgId(), message.getMsg(), message.getFormattedTimestamp(), message.getSenderUsername());
         items.add(item);
     }
@@ -137,8 +142,8 @@ public class MessagesActivity extends AppCompatActivity {
     }
 
     /**
-     * Set the messages list
-     * @param msgs
+     * Reset the messages list and notify the recycler view
+     * @param msgs list of new messages used to override the currently set messages
      */
     public void setMessagesList(ArrayList<Message> msgs) {
         messages.clear();

@@ -27,8 +27,13 @@ import java.util.stream.Collectors;
  */
 public final class GetContactedUsersTask extends AsyncTask<String, Integer, ArrayList<Integer>> {
 
+    // activity the task is called from
     Activity srcActivity;
+
+    // list of all users in the system
     ArrayList<User> allUsers = new ArrayList<>();
+
+    // id of the currently logged in user
     int currUserId = -1;
 
     private static final String GET_CONVOS_ENDPOINT = "http://10.0.3.2/edproj3/api/getcontactedusers";
@@ -90,7 +95,7 @@ public final class GetContactedUsersTask extends AsyncTask<String, Integer, Arra
 
         // set the currently contacted listview
         ListView contactedUsersListView = srcActivity.findViewById(R.id.current_convos_listview);
-        ArrayAdapter<User> contactedUserAdapter = new ArrayAdapter<>(srcActivity, android.R.layout.simple_list_item_1, android.R.id.text1, contactedUsers);
+        ArrayAdapter<User> contactedUserAdapter = new ArrayAdapter<>(srcActivity, R.layout.blue_list_view, R.id.blue_listview_item_text, contactedUsers);
         contactedUsersListView.setAdapter(contactedUserAdapter);
         contactedUsersListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -98,13 +103,14 @@ public final class GetContactedUsersTask extends AsyncTask<String, Integer, Arra
                 User clickedUser = (User) parent.getItemAtPosition(position);
                 int clickedUserId = clickedUser.getId();
                 Log.d("contactedUserClick", "clicked userid: " + clickedUserId);
+                // get all messages between the src user and the clicked user
                 new GetMessagesTask(srcActivity).execute(String.valueOf(currUserId), String.valueOf(clickedUserId), clickedUser.getUsername());
             }
         });
 
         // set the currently contacted listview
         ListView uncontactedUsersListView = srcActivity.findViewById(R.id.other_users_listview);
-        ArrayAdapter<User> uncontactedUserAdapter = new ArrayAdapter<>(srcActivity, android.R.layout.simple_list_item_1, android.R.id.text1, uncontactedUsers);
+        ArrayAdapter<User> uncontactedUserAdapter = new ArrayAdapter<>(srcActivity, R.layout.blue_list_view, R.id.blue_listview_item_text, uncontactedUsers);
         uncontactedUsersListView.setAdapter(uncontactedUserAdapter);
         uncontactedUsersListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -112,6 +118,7 @@ public final class GetContactedUsersTask extends AsyncTask<String, Integer, Arra
                 User clickedUser = (User) parent.getItemAtPosition(position);
                 int clickedUserId = clickedUser.getId();
                 Log.d("contactedUserClick", "clicked userid: " + clickedUserId);
+                // get all messages between the src user and the clicked user
                 new GetMessagesTask(srcActivity).execute(String.valueOf(currUserId), String.valueOf(clickedUserId), clickedUser.getUsername());
             }
         });

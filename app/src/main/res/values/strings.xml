@@ -1,3 +1,18 @@
 <resources>
-    <string name="app_name">Project3</string>
+    <string name="app_name">Blue Messenger</string>
+    <string name="create_acc_str">CREATE ACCOUNT</string>
+    <string name="username_str">Username</string>
+    <string name="enter_username_str">Enter username</string>
+    <string name="password_str">Password</string>
+    <string name="enter_pw_str">Enter password</string>
+    <string name="or_str">OR</string>
+    <string name="login_str">Login</string>
+    <string name="curr_convos_str">Current Conversations</string>
+    <string name="other_users_str">Other available users</string>
+    <string name="enter_text_hint_str">Enter text here</string>
+    <string name="send_str">Send</string>
+    <string name="test_msg_str">this is a test message</string>
+    <string name="test_left_sender_str">left semder</string>
+    <string name="test_left_details_str">left details text</string>
+    <string name="test_right_details_str">right details text</string>
 </resources>

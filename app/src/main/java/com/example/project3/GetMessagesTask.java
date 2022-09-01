@@ -21,14 +21,22 @@ public final class GetMessagesTask extends AsyncTask<String, Integer, ArrayList<
 
     private static final String GET_MESSAGES_ENDPOINT = "http://10.0.3.2/edproj3/api/getmessages";
 
+    // reference to the activity the getmessages task was called for
     Activity srcActivity;
-    String srcUserId = "";
-    String destUserId = "";
-    String destUsername = "";
 
+    // id of currently logged in user
+    String srcUserId = "";
+    // id of user being contacted
+    String destUserId = "";
+    // username of user being contacted
+    String destUsername = "";
     // Id of message that was deleted (only used by DeleteMessageTask)
     String deletedMsgId = "";
 
+    /**
+     * Constructor
+     * @param activity source (Message) activity
+     */
     public GetMessagesTask(Activity activity) {
         this.srcActivity = activity;
     }

@@ -1,6 +1,10 @@
 package com.example.project3;
 
+/**
+ * Class representing an item in the messages recycler view
+ */
 public class RecyclerItem {
+    // variables used to identify chat bubble types
     public static final int LEFT_CHAT_BUBBLE_LAYOUT_VIEW_TYPE = 0;
     public static final int RIGHT_CHAT_BUBBLE_LAYOUT_VIEW_TYPE = 1;
 

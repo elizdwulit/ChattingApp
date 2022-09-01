@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MessageDashboardActivity"
+    android:theme="@style/BlueListView"
     android:padding="16dp">
 
     <TextView
@@ -14,7 +15,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:text="Current Conversations"
+        android:text="@string/curr_convos_str"
         android:textSize="30dp"/>
 
     <ListView
@@ -34,7 +35,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/current_convos_listview"
         android:layout_marginTop="20dp"
-        android:text="Other available users"
+        android:text="@string/other_users_str"
         android:textSize="30dp"/>
 
     <ListView

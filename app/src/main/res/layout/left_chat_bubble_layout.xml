@@ -16,7 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="left semder"
+            android:text="@string/test_left_sender_str"
             android:textColor="@color/purple_200"
             android:textStyle="bold"
             android:layout_marginLeft="5dp"/>
@@ -32,16 +32,16 @@
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             app:cardCornerRadius="15dp"
-            app:cardBackgroundColor="@color/teal_200"
+            app:cardBackgroundColor="@color/black"
             android:layout_weight="1">
 
             <TextView
                 android:id="@+id/left_recycler_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="this is a test message"
+                android:text="@string/test_msg_str"
                 android:textSize="20dp"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:padding="10dp"
                 android:enabled="true"
                 android:textIsSelectable="true"
@@ -65,7 +65,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="left details text"
+            android:text="@string/test_left_details_str"
+            android:textColor="@color/gray"
             android:layout_marginLeft="5dp"/>
     </LinearLayout>
 

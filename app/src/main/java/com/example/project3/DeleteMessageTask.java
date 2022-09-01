@@ -20,12 +20,20 @@ public final class DeleteMessageTask extends AsyncTask<String, Integer, Boolean>
 
     private static final String DELETE_MSG_ENDPOINT = "http://10.0.3.2/edproj3/api/deletemessage";
 
+    // reference to the message activity that the user is in
     Activity msgActivity;
 
+    // the id of the currently logged in user
     String currUserId;
+    // the id of the other user in the conversation
     String destUserId;
+    // id of the message to delete
     String delMsgId;
 
+    /**
+     * Constructor
+     * @param activity reference to the message activity the message is in
+     */
     public DeleteMessageTask(Activity activity) {
         this.msgActivity = activity;
     }

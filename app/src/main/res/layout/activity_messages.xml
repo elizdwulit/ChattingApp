@@ -22,7 +22,7 @@
         android:background="@drawable/edit_text_border"
         android:layout_marginTop="13dp"
         android:padding="10dp"
-        android:hint="Enter text here"
+        android:hint="@string/enter_text_hint_str"
         android:textSize="20dp"
         android:maxLines="3"/>
 
@@ -34,7 +34,9 @@
         app:layout_constraintTop_toBottomOf="@id/messages_recycler_view"
         android:layout_marginTop="11dp"
         android:layout_marginLeft="10dp"
-        android:text="Send"
+        android:text="@string/send_str"
+        android:textColor="@color/white"
+        android:theme="@style/BlueButtonTheme"
         android:onClick="sendMessage"/>
 
 

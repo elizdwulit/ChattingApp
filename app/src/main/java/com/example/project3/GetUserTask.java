@@ -22,6 +22,7 @@ public final class GetUserTask extends AsyncTask<String, Integer, String> {
     // the activity that created the task
     Activity srcActivity;
 
+    // endpoint used to get a user
     private static final String GET_USER_ENDPOINT = "http://10.0.3.2/edproj3/api/getuser";
 
     public GetUserTask(Activity activity) {
@@ -31,7 +32,6 @@ public final class GetUserTask extends AsyncTask<String, Integer, String> {
     @Override
     protected String doInBackground(String... strings) {
         Log.d("getUser", "Verifying user");
-
         String username = strings[0];
         String password = strings[1];
         String apiResults = "";
@@ -48,7 +48,6 @@ public final class GetUserTask extends AsyncTask<String, Integer, String> {
             int resCode = conn.getResponseCode();
 
             // proceed if successful api call
-
             if (resCode == 200) {
                 BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
                 String line;
@@ -56,7 +55,6 @@ public final class GetUserTask extends AsyncTask<String, Integer, String> {
                     apiResults += line.trim();
                 }
             }
-
         } catch (Exception e) {
             Log.e("getUser", "Error getting user");
         }
@@ -70,6 +68,7 @@ public final class GetUserTask extends AsyncTask<String, Integer, String> {
     protected void onPostExecute(String userId) {
         Log.d("getUser", "enter postExecute");
 
+        // if user found go to messages dashboard
         if (userId != null && !userId.isEmpty()) {
             // go to message dashboard activity
             Intent intent = new Intent(srcActivity, MessageDashboardActivity.class);

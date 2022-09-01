@@ -15,11 +15,19 @@ import java.util.ArrayList;
  */
 public final class GetAllUsersTask extends AsyncTask<String, Integer, ArrayList<User>> {
 
+    // the activity that the getallusers task was called in
     Activity srcActivity;
+
+    // the id of the currently logged in user
     String currUserId = "";
 
+    // endpoint used to retreive all users
     private static final String GET_ALL_USERS_ENDPOINT = "http://10.0.3.2/edproj3/api/getallusers";
 
+    /**
+     * Constructor
+     * @param activity the source activity
+     */
     public GetAllUsersTask(Activity activity) {
         this.srcActivity = activity;
     }
@@ -61,6 +69,7 @@ public final class GetAllUsersTask extends AsyncTask<String, Integer, ArrayList<
     @Override
     protected void onPostExecute(ArrayList<User> users) {
         Log.d("getAllUsers", "enter postExecute");
+        // after getting all users, make call to get list of users that the current user has conversations with
         new GetContactedUsersTask(srcActivity, users).execute(currUserId);
     }
 }

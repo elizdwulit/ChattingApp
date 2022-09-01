@@ -21,14 +21,25 @@ public final class AddMessageTask extends AsyncTask<String, Integer, Boolean> {
     // the activity that created the task
     private MessagesActivity msgActivity;
 
+    // endpoint used to add a message to the db
     private static final String ADD_MSG_ENDPOINT = "http://10.0.3.2/edproj3/api/addmessage";
 
+    // id of currently logged in user
     String srcuserid;
+    // id of user to send message to
     String destuserid;
+    // username of user to send message to
     String destUsername;
+    // the message to send
     String msg;
+
+    // current time
     Timestamp currTime;
 
+    /**
+     * Constuctor
+     * @param msgActivity the activity used for sending the message
+     */
     public AddMessageTask(MessagesActivity msgActivity) {
         this.msgActivity = msgActivity;
     }

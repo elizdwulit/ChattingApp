@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,6 +29,12 @@ public class MainActivity extends AppCompatActivity {
         EditText pwEditText = (EditText) findViewById(R.id.login_password_edit_text);
         String pw = pwEditText.getText().toString();
 
+        // if nothing provided, show toast and do nothing
+        if (username.trim().isEmpty() && pw.trim().isEmpty()) {
+            Toast.makeText(MainActivity.this, "Please enter username and password", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         // validate the user against db ang "log in"
         new GetUserTask(this).execute(username, pw);
 
@@ -46,6 +53,12 @@ public class MainActivity extends AppCompatActivity {
         String username = usernameEditText.getText().toString();
         EditText pwEditText = (EditText) findViewById(R.id.createacc_password_edit_text);
         String pw = pwEditText.getText().toString();
+
+        // if nothing provided
+        if (username.trim().isEmpty() && pw.trim().isEmpty()) {
+            Toast.makeText(MainActivity.this, "Please enter username and password", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         // add the user to the db and "log in"
         new AddUserTask(this).execute(username, pw);

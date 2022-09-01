@@ -41,6 +41,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemViewType(int position) {
+        // get an item from the recycler view and determine whether it should be a 'left bubble' or 'right bubble'
         RecyclerItem recyclerItem = recyclerItemList.get(position);
         if (recyclerItem == null) {
             return -1;
@@ -59,11 +60,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         switch (viewType) {
-            case RecyclerItem.LEFT_CHAT_BUBBLE_LAYOUT_VIEW_TYPE:
+            case RecyclerItem.LEFT_CHAT_BUBBLE_LAYOUT_VIEW_TYPE: // create left bubble
                 View leftLayoutView = LayoutInflater.from(parent.getContext())
                         .inflate(R.layout.left_chat_bubble_layout, parent, false);
                 return new LeftChatViewHolder(leftLayoutView);
-            case RecyclerItem.RIGHT_CHAT_BUBBLE_LAYOUT_VIEW_TYPE:
+            case RecyclerItem.RIGHT_CHAT_BUBBLE_LAYOUT_VIEW_TYPE: // create right bubble
                 View rightLayoutView = LayoutInflater.from(parent.getContext())
                         .inflate(R.layout.right_chat_bubble_layout, parent, false);
                 return new RightChatViewHolder(rightLayoutView);
@@ -108,7 +109,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter {
      * Class for ViewHolder for the left chat layout
      */
     public class LeftChatViewHolder extends RecyclerView.ViewHolder {
-
+        // the components in the left bubbles of the recycler view
         private CardView chatBubbleCardView;
         private TextView chatBubbleTextView;
         private TextView detailsTextView;
@@ -120,6 +121,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter {
          */
         public LeftChatViewHolder(@NonNull View itemView) {
             super(itemView);
+            // find the components
             chatBubbleTextView = itemView.findViewById(R.id.left_recycler_textview);
             chatBubbleCardView = itemView.findViewById(R.id.left_recycler_cardview);
             detailsTextView = itemView.findViewById(R.id.left_details_textview);
@@ -142,7 +144,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter {
      * Class for ViewHolder for the left chat layout
      */
     public class RightChatViewHolder extends RecyclerView.ViewHolder {
-
+        // the components in the right bubbles of the recycler view
         View view;
         private CardView chatBubbleCardView;
         private TextView chatBubbleTextView;
@@ -154,6 +156,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter {
          */
         public RightChatViewHolder(@NonNull View itemView) {
             super(itemView);
+            // find the components
             view = itemView;
             chatBubbleTextView = itemView.findViewById(R.id.right_recycler_textview);
             chatBubbleCardView = itemView.findViewById(R.id.right_recycler_cardview);
@@ -175,8 +178,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter {
          * @param messageId id of message to delete
          */
         public void setTrashIconHandler(int messageId) {
-            //Log.d("RecAdapter", "Set trash icon handler for message " + messageId);
             int msgId = messageId;
+            // set the event handler for trash icon click (used to delete a message)
             ImageView trashIcon = itemView.findViewById(R.id.right_trash_icon);
             trashIcon.setOnClickListener(new View.OnClickListener() {
                 @Override

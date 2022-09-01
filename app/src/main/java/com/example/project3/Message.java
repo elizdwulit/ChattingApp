@@ -12,13 +12,27 @@ public class Message implements Serializable {
     // the format of timestamps
     public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
+    // id of message stored in db
     int msgId;
+    // id of the sender user
     int srcUserId;
+    // id of receiver user
     int destUserId;
+    // username of the user being sent the message
     String senderUsername;
+    // message
     String msg;
+    // datetime the message was sent
     Timestamp timestamp;
 
+    /**
+     * Constructor
+     * @param srcUserId
+     * @param destUserId
+     * @param senderUsername
+     * @param msg
+     * @param timestamp
+     */
     public Message(int srcUserId, int destUserId, String senderUsername, String msg, Timestamp timestamp) {
         this.srcUserId = srcUserId;
         this.destUserId = destUserId;
