@@ -1,26 +1,22 @@
 package com.example.project3;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.format.Time;
-import android.view.ContextMenu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
-import java.sql.Timestamp;
-import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Activity for continuously receiving messages in a conversation
+ */
 public class MessagesActivity extends AppCompatActivity {
 
     // keys used to send data between Activities
